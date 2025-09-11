@@ -4,12 +4,15 @@
 #include <SFML/Graphics.hpp>
 #include <cstdlib>
 #include <ctime>
+#include "Paddle.h"
+#include "Wall.h"
 
 class Ball {
 public:
     sf::CircleShape shape;
     float speedX;
     float speedY;
+    int bounces = 0;
 
     Ball(float x, float y) {
         shape.setRadius(10.f);
@@ -17,21 +20,80 @@ public:
         shape.setOrigin(10.f, 10.f);
         shape.setPosition(x, y);
 
-        srand(static_cast<unsigned>(time(nullptr)));
+        std::srand(static_cast<unsigned>(std::time(nullptr)));
         reset();
     }
 
     void reset() {
-        shape.setPosition(400.f, 300.f);
-
-        int dirX = (rand() % 2 == 0) ? 1 : -1;
-        int dirY = (rand() % 2 == 0) ? 1 : -1;
-
-        speedX = 5.f * dirX;
-        speedY = 3.f * dirY;
+        shape.setPosition(960.f, 540.f);
+        int dirX = (std::rand() % 2 == 0) ? 1 : -1;
+        int dirY = (std::rand() % 2 == 0) ? 1 : -1;
+        speedX = 7.f * dirX;
+        speedY = 5.f * dirY;
+        bounces = 0;
     }
 
-    void move() {
+    void update(int winW, int winH,
+                const Paddle& left, const Paddle& right,
+                const Wall& wall,
+                int& scoreL, int& scoreR)
+    {
         shape.move(speedX, speedY);
+
+        if (shape.getPosition().y - shape.getRadius() <= 0.f ||
+            shape.getPosition().y + shape.getRadius() >= winH) {
+            speedY = -speedY;
+        }
+
+        if (shape.getGlobalBounds().intersects(left.shape.getGlobalBounds())) {
+            speedX = std::abs(speedX);
+            ++bounces;
+            increaseSpeedIfNeeded();
+            shape.setPosition(left.shape.getPosition().x + left.shape.getSize().x * 0.5f + shape.getRadius() + 0.5f,
+                              shape.getPosition().y);
+        }
+
+        if (shape.getGlobalBounds().intersects(right.shape.getGlobalBounds())) {
+            speedX = -std::abs(speedX);
+            ++bounces;
+            increaseSpeedIfNeeded();
+            shape.setPosition(right.shape.getPosition().x - right.shape.getSize().x * 0.5f - shape.getRadius() - 0.5f,
+                              shape.getPosition().y);
+        }
+
+        if (shape.getGlobalBounds().intersects(wall.shape.getGlobalBounds())) {
+            speedX = -speedX;
+            ++bounces;
+            increaseSpeedIfNeeded();
+
+            if (speedX > 0) {
+                shape.setPosition(wall.shape.getPosition().x + wall.shape.getSize().x * 0.5f + shape.getRadius() + 0.5f,
+                                  shape.getPosition().y);
+            } else {
+                shape.setPosition(wall.shape.getPosition().x - wall.shape.getSize().x * 0.5f - shape.getRadius() - 0.5f,
+                                  shape.getPosition().y);
+            }
+        }
+
+        if (shape.getPosition().x < 0.f) {
+            ++scoreR;
+            reset();
+            shape.setPosition(winW / 2.f, winH / 2.f);
+        }
+        if (shape.getPosition().x > winW) {
+            ++scoreL;
+            reset();
+            shape.setPosition(winW / 2.f, winH / 2.f);
+        }
+    }
+
+private:
+    void increaseSpeedIfNeeded() {
+        if (bounces % 5 == 0) {
+            speedX *= 1.1f;
+            speedY *= 1.1f;
+        }
     }
 };
+
+#endif

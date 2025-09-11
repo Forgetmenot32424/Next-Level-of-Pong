@@ -16,3 +16,5 @@ CONFIG(debug, debug|release){
 HEADERS += \
     Ball.h \
     Paddle.h \
+    Score.h \
+    Wall.h

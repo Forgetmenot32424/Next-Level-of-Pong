@@ -13,7 +13,7 @@ public:
         shape.setFillColor(sf::Color::White);
         shape.setOrigin(6.f, 50.f);
         shape.setPosition(x, y);
-        speed = 6.f;
+        speed = 8.f;
     }
 
     void moveUp() {
@@ -22,6 +22,18 @@ public:
 
     void moveDown() {
         shape.move(0.f, speed);
+    }
+
+    void update(int windowHeight) {
+        float halfHeight = shape.getSize().y * 0.5f;
+        sf::Vector2f pos = shape.getPosition();
+
+        if (pos.y - halfHeight < 0.f)
+            pos.y = halfHeight;
+        if (pos.y + halfHeight > windowHeight)
+            pos.y = windowHeight - halfHeight;
+
+        shape.setPosition(pos);
     }
 };
 
