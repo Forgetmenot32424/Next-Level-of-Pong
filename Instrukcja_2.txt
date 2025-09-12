@@ -1,0 +1,23 @@
+W celu poprawnego uruchomienia gry w pliku nagłówkowym Score.h należy w linijce 15 umieścić własną ścieżkę do  pliku o nazwie "Sakamoto.ttf" zawierającego czcionkę. Plik ten znajduje się wraz ze wszystkimi zasobami w folderze "Resources".
+
+W pliku nagłówkowym Sound.h w linijkach od 11 do 14 należy również umieścić własną ścieżkę do plików. Oto ich poprawna kolejność
+
+Linijka	     Nazwa Pliku
+   11 ----- wallsound.wav
+   12 ----- pointsound.wav
+   13 ----- ballsound.wav
+   14 ----- gamemusic.wav
+
+Pliki te znajdują się wraz ze wszystkimi zasobami w folderze "Resources".
+
+W pliku nagłówkowym Theme.h w linijkach od 17 do 22 należy również umieścić własną ścieżkę do plików. Oto ich poprawna kolejność
+
+Linijka	     Nazwa Pliku
+   17 ----- night.jpg
+   18 ----- ocean.jpg
+   19 ----- neon.jpg
+   20 ----- forest.jpg
+   21 ----- beach.jpg
+   22 ----- sky.jpg
+
+Pliki te znajdują się wraz ze wszystkimi zasobami w folderze "Resources".
