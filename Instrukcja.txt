@@ -1,1 +1,0 @@
-W celu poprawnego uruchomienia gry w pliku nagłówkowym Score.h należy w linijce 15 umieścić własną ścieżkę do  pliku zawierającego czcionkę. Plik ten znajduje się wraz ze wszystkimi zasobami w folderze "Resources".

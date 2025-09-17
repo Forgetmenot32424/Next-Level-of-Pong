@@ -21,3 +21,8 @@ Linijka	     Nazwa Pliku
    22 ----- sky.jpg
 
 Pliki te znajdują się wraz ze wszystkimi zasobami w folderze "Resources".
+
+W pliku main. cpp w linijakch 43, 44 i 62 należy dodać własną ścieżkę do pliku.
+43 ----- powerup.png
+44 ----- powerup2.png
+45 ----- Sakamoto.ttf
